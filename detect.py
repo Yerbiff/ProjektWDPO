@@ -8,26 +8,65 @@ from tqdm import tqdm
 
 
 def detect(img_path: str) -> Dict[str, int]:
-    """Object detection function, according to the project description, to implement.
 
-    Parameters
-    ----------
-    img_path : str
-        Path to processed image.
+    red_count = 0;
+    yellow_count = 0;
+    green_count  = 0;
+    violet_count  = 0;
+    #
+    img1 = cv2.imread(img_path, cv2.IMREAD_COLOR)
+    img = cv2.resize(img1, (1200,700), interpolation=cv2.INTER_AREA)
+    # Zdefiniowanie zakresów wartości kolorów w modelu HSV
+    frame_HSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-    Returns
-    -------
-    Dict[str, int]
-        Dictionary with quantity of each object.
-    """
-    img = cv2.imread(img_path, cv2.IMREAD_COLOR)
+    red_range = cv2.inRange(frame_HSV, (0, 140, 60), (5, 255, 255))
+    yellow_range = cv2.inRange(frame_HSV, (20, 233, 129), (25, 255, 255))
+    green_range = cv2.inRange(frame_HSV, (38, 80, 10), (90, 255, 255))
+    violet_range = cv2.inRange(frame_HSV, (130, 70, 70), (166, 255, 255))
 
-    #TODO: Implement detection method.
-    
-    red = 0
-    yellow = 0
-    green = 0
-    purple = 0
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+    dilated_mask = cv2.dilate(red_range, kernel, iterations=2)
+    # Wykryj kontury cukierków na masce
+    contours, _ = cv2.findContours(dilated_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Zlicz  red cukierki
+    for contour in contours:
+        # Jeśli kontur ma wystarczająco duży obszar, to uznaj go za cukierek
+        if cv2.contourArea(contour) > 150:
+            red_count += 1
+
+    dilated_mask = cv2.dilate(yellow_range, kernel, iterations=2)
+    # Wykryj kontury cukierków na masce
+    contours, _ = cv2.findContours(dilated_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Zlicz  yellow cukierki
+    for contour in contours:
+        # Jeśli kontur ma wystarczająco duży obszar, to uznaj go za cukierek
+        if cv2.contourArea(contour) > 150:
+            yellow_count += 1
+    dilated_mask = cv2.dilate(green_range, kernel, iterations=2)
+    # Wykryj kontury cukierków na masce
+    contours, _ = cv2.findContours(dilated_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Zlicz  green cukierki
+    for contour in contours:
+        # Jeśli kontur ma wystarczająco duży obszar, to uznaj go za cukierek
+        if cv2.contourArea(contour) > 150:
+            green_count += 1
+    dilated_mask = cv2.dilate(violet_range, kernel, iterations=2)
+    # Wykryj kontury cukierków na masce
+    contours, _ = cv2.findContours(dilated_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Zlicz  violet cukierki
+    for contour in contours:
+        # Jeśli kontur ma wystarczająco duży obszar, to uznaj go za cukierek
+        if cv2.contourArea(contour) > 150:
+            violet_count += 1
+
+    red = red_count
+    yellow = yellow_count
+    green = green_count
+    purple = violet_count
 
     return {'red': red, 'yellow': yellow, 'green': green, 'purple': purple}
 
