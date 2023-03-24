@@ -61,17 +61,6 @@ Szablon projektu zliczania cukierków na zdjęciach dostępny jest w serwisie [G
 
 Katalog [`data`](./data) zawiera przykłady, na podstawie których w pliku [`detect.py`](./detect.py) przygotowany ma zostać algorytm zliczania cukierków. Funkcja `main` w pliku `detect.py` powinna pozostać bez zmian. 
 
-### Wykorzystanie szablonu
-
-W przypadku chęci wykorzystania przygotowanego szablonu oraz systemu kontroli wersji w postaci serwisu GitHub możliwe jest stworzenie własnego repozytorium na podstawie szablonu. W tym celu należy poprzez przycisk `Use this template` utworzyć nowe repozytorium wybierając swoje konto jako właściciela, nadając mu własną nazwę i obowiązkowo ustawiając widzialność jako **prywatne**. Powyższe kroki zostały przedstawione na załączonych zdjęciach.
-
-<p align="center">
-  <img width="900" height="200" src="./readme_files/create_repo_from_template_01.png">
-</p>
-<p align="center">
-  <img width="600" height="500" src="./readme_files/create_repo_from_template_02.png">
-</p>
-
 ### Biblioteki
 
 Interpreter testujący projekty będzie miał zainstalowane biblioteki:
@@ -113,18 +102,6 @@ python3 detect.py -p ./data -o ./results.json
 ```
 
 Konfiguracja parametrów wejściowych skryptu w środowisku PyCharm została opisana w pliku [PyCharm_input_configuration.md](./PyCharm_input_configuration.md).
-
-## Przesyłanie rozwiązania
-
-Stworzone rozwiązanie należy skompresować do formatu `ZIP`, a wyjściowy plik nazwać numerem indeksu (np. 123456.zip). Zadanie to można przykładowo zrealizować w systemach Linux z wykorzystaniem komendy systemowej `zip` w terminalu tak, jak to zostało przedstawione poniżej:
-
-```bash
-zip <NUMER INDEKSU>.zip detect.py requirements.txt
-```
-
-Skompresowany plik należy wstawić w odpowiednim miejscu na platformie eKursy.
-
-**Uwaga:** w pliku `.zip` powinien znajdować się jedynie bezpośrednio plik `detect.py` oraz opcjonalnie `requirements.txt`.
 
 ## Ewaluacja rozwiązań
 
